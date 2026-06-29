@@ -9,10 +9,10 @@
 - 多窗口通信：Event 广播、全局 State
 - 窗口状态：位置/尺寸持久化
 
-### v2 关键差异
+### 窗口架构
+
 ```
-v1: Window（窗口 = WebView，绑定在一起）
-v2: WebviewWindow（窗口 + WebView 分离，一个 Window 可含多个 Webview）
+Tauri v2: WebviewWindow（窗口 + WebView 分离，一个 Window 可含多个 Webview）
 
 【对比 Electron】
 Electron: BrowserWindow 天然 = 窗口，每个窗口独立 Renderer 进程（进程隔离）

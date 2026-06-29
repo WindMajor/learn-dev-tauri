@@ -5,20 +5,20 @@
  *
  * 【学习目标】
  *   1. 理解 Tauri V2 项目的完整目录结构（前端 + 后端 + 配置三层分离）
- *   2. 掌握 tauri.conf.json V2 格式的关键字段（与 V1 完全不同）
+ *   2. 掌握 tauri.conf.json V2 格式的关键字段（详解每个字段）
  *   3. 了解 Cargo.toml 和 package.json 的依赖关系
  *
  * 【与纯 Web 开发的核心差异】
  *   - 纯 Web 开发：只有一个 package.json + 前端源码
  *   - Tauri V2 开发：存在双层配置文件（前端 Node.js + 后端 Rust Cargo）
- *   - V2 新增 capabilities/ 目录（权限系统，V1 无此目录）
+ *   - V2 新增 capabilities/ 目录（权限系统）
  *   - 构建产物分为两部分：前端 dist/ + 后端 native binary
  *
- * 【V1 → V2 迁移要点】
- *   - 权限系统大改：V1 用 allowlist 配置，V2 用 capabilities/ 目录
- *   - 插件独立化：V2 插件需单独安装 npm + cargo 包
- *   - 配置结构变更：tauri.conf.json 的 app.security 替代 V1 的 tauri.security
- *   - API 路径变化：V2 用 @tauri-apps/api 的模块化子路径
+ * 【核心概念】
+ *   - 权限系统：使用 capabilities/ 目录进行声明式权限管理
+ *   - 插件独立化：插件需单独安装 npm + cargo 包
+ *   - 配置结构：tauri.conf.json 的 app.security 控制安全策略
+ *   - API 路径：使用 @tauri-apps/api 的模块化子路径
  */
 
 // ============================================================================
@@ -50,7 +50,7 @@
 //
 // 关键文件的作用：
 //   - tauri.conf.json: 应用元信息 + 构建配置 + 窗口配置 + 打包配置
-//   - capabilities/default.json: 权限声明（替代 V1 的 allowlist）
+//   - capabilities/default.json: 权限声明（声明式权限管理）
 //   - lib.rs: 注册 Rust 命令和插件的核心文件
 
 console.log("=== 示例 1：Tauri V2 项目结构概览 ===");
@@ -58,7 +58,7 @@ console.log(`
   前端入口：/src/main.ts → 挂载 Vue/React 应用
   后端入口：/src-tauri/src/main.rs → 调用 lib.rs 中的 run() 函数
   配置中枢：/src-tauri/tauri.conf.json（V2 格式，$schema 指向 V2）
-  权限目录：/src-tauri/capabilities/（V2 新特性，替代 V1 allowlist）
+  权限目录：/src-tauri/capabilities/（V2 核心特性）
   图标目录：/src-tauri/icons/（多平台、多分辨率图标）
 `);
 
@@ -69,7 +69,7 @@ console.log(`
 //
 // 实际文件位置：/src-tauri/tauri.conf.json
 // 注意：V2 的 $schema 必须指向 "https://schema.tauri.app/config/2"
-//       V1 指向 "./node_modules/@tauri-apps/cli/schema.json"
+//       旧项目指向 "./node_modules/@tauri-apps/cli/schema.json"
 
 interface TauriConfV2 {
   $schema: string;           // V2 schema 地址，提供 IDE 智能提示
@@ -99,7 +99,7 @@ interface TauriConfV2 {
     icon: string[];              // 图标文件路径数组
     // 更多打包配置见 12_build_and_release.ts
   };
-  // V1 没有的 V2 字段：
+  // Tauri V2 特有的字段：
   // plugins: {}                 // V2 插件配置（独立于 build 和 app）
 }
 
@@ -123,7 +123,7 @@ console.log("=== 示例 3：Cargo.toml 依赖管理 ===");
 console.log(`
   [dependencies]
   tauri = { version = "2", features = [] }
-    → Tauri V2 核心框架，"2" 表示 V2 版本（与 V1 的 "1" 区分）
+    → Tauri V2 核心框架，"2" 表示 V2 版本
     → features 可选值：tray-icon, http-multipart, etc.
 
   tauri-build = { version = "2", features = [] }   [build-dependencies]
@@ -168,7 +168,7 @@ console.log(`
 console.log("=== 示例 4：lib.rs 核心结构 ===");
 console.log(`
   Builder::default()     → 创建 Tauri 应用构建器
-  .plugin(...)           → 注册插件（V2 推荐方式，替代 V1 的 feature flag）
+  .plugin(...)           → 注册插件（V2 推荐方式，替代旧的内联方式）
   .invoke_handler(...)   → 注册 Rust 命令供前端调用
   .manage(...)           → 注入全局状态（见 11_state_and_events.ts）
   .setup(|app| { ... })  → 应用初始化钩子
@@ -176,7 +176,7 @@ console.log(`
 `);
 
 // ============================================================================
-// 示例 5：capabilities 权限系统（V2 新特性，替代 V1 allowlist）
+// 示例 5：capabilities 权限系统（V2 核心特性）
 // ============================================================================
 // 场景：V2 的权限模型从「全局大列表」改为「分文件声明」，更灵活、可组合
 //
@@ -184,7 +184,7 @@ console.log(`
 
 console.log("=== 示例 5：capabilities 权限系统（V2 核心变更）===");
 console.log(`
-  V1 方式（已废弃）：
+  常见错误写法：
     tauri.conf.json 中配置：
     {
       "tauri": {
@@ -260,8 +260,8 @@ console.log(`
       → 提供 npm run tauri dev / tauri build 等命令
       → 版本必须与 @tauri-apps/api 兼容
 
-  V1 vs V2 依赖对比：
-    V1: @tauri-apps/api@^1  ← 整体导入
+  依赖版本说明：
+    V2: @tauri-apps/api@^2  ← 模块化导入
     V2: @tauri-apps/api@^2  ← 模块化导入（/core, /event, /window 等子路径）
 `);
 
@@ -285,26 +285,26 @@ console.log(`
 
 // 错误 2：忘记在 V2 中使用 capabilities 文件
 console.log(`
-  ❌ 错误：V1 迁移到 V2 后，在 tauri.conf.json 中保留了 allowlist 配置
-  // tauri.conf.json（V1 遗留的错误配置）
+  ❌ 错误：在 tauri.conf.json 中使用了 allowlist 配置（已废弃）
+  // tauri.conf.json（已废弃的错误配置）
   {
     "tauri": {
-      "allowlist": { "fs": { "readFile": true } }  ← V2 不再解析此字段！
+      "allowlist": { "fs": { "readFile": true } }  ← 此字段已被废弃，Tauri 不再解析！
     }
   }
   
-  原因：V2 完全移除了 allowlist 机制，所有权限通过 capabilities/ 目录声明
+  原因：Tauri V2 所有权限必须通过 capabilities/ 目录声明
   修复：
     1. 删除 tauri.conf.json 中的 allowlist 配置
     2. 在 src-tauri/capabilities/ 下新建或修改 JSON 文件
     3. 添加 "fs:read-files" 等权限标识符
 `);
 
-// 错误 3：$schema 指向 V1 版本
+// 错误 3：$schema 指向了本地路径
 console.log(`
-  ❌ 错误：tauri.conf.json 的 $schema 指向 V1
+  ❌ 错误：tauri.conf.json 的 $schema 指向本地文件
   {
-    "$schema": "./node_modules/@tauri-apps/cli/schema.json"  ← V1 路径
+    "$schema": "./node_modules/@tauri-apps/cli/schema.json"  ← 本地路径（不推荐）
   
   原因：V2 的 schema 在不同位置，指向错误会导致 IDE 提示失效
   修复：
@@ -320,8 +320,8 @@ console.log(`
  *    - 配置层（tauri.conf.json + capabilities/）→ src-tauri/
  *    - 后端层（Rust + Tauri Framework）→ src-tauri/src/
  *
- * 2. V2 相比 V1 的核心变化：
- *    - 权限系统：allowlist 单文件 → capabilities/ 多文件
+ * 2. Tauri V2 核心架构特点：
+ *    - 权限系统：通过 capabilities/ 多文件声明
  *    - 插件管理：feature flag → 独立的 cargo crate + npm 包
  *    - 配置结构：tauri.xxx → app.xxx / build.xxx / bundle.xxx
  *

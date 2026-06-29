@@ -12,7 +12,7 @@
 //
 // 【核心概念】
 //   - Tauri 自动注入 WebviewWindow 或 Window 引用到命令参数
-//   - V2 中 WebviewWindowBuilder 替代 V1 的 WindowBuilder
+//   - 使用 WebviewWindowBuilder 创建和管理窗口
 //   - 窗口 URL 支持三种模式：App、External、CustomProtocol
 
 use tauri::{AppHandle, Emitter, Manager, WebviewUrl, WebviewWindow, WebviewWindowBuilder};

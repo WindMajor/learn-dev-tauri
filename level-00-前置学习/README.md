@@ -22,18 +22,25 @@
 
 适合已具备 TypeScript 和 Rust 基础语法知识、希望深入掌握桌面端应用开发的开发者。
 
+2026年6月8日 添加 Tauri V2 系统学习项目说明文档
+2026年6月8日 优化css归属的bug
+2026年6月8日 把Vue的全局样式移到了专门的src/styles/main.css里了，回归标准
+2026年6月8日 解决tauri.confi.json的schema黄线问题，网络下载被限制了
+2026年6月8日 新增所有的学习文件，开启基础学习模式
+2026年6月6日 Tauri学习项目首次初始化
+
 ---
 
 ## 🚀 技术栈
 
-| 层级 | 技术 | 版本 |
-|------|------|------|
-| 前端框架 | [Vue](https://vuejs.org/) | 3.5+ |
-| 前端语言 | [TypeScript](https://www.typescriptlang.org/) | ~5.6 |
-| 构建工具 | [Vite](https://vitejs.dev/) | 6.0+ |
-| 桌面端框架 | [Tauri](https://tauri.app/) | V2 |
-| 后端语言 | [Rust](https://www.rust-lang.org/) | 2021 Edition |
-| 包管理 | pnpm / npm | — |
+| 层级       | 技术                                          | 版本         |
+| ---------- | --------------------------------------------- | ------------ |
+| 前端框架   | [Vue](https://vuejs.org/)                     | 3.5+         |
+| 前端语言   | [TypeScript](https://www.typescriptlang.org/) | ~5.6         |
+| 构建工具   | [Vite](https://vitejs.dev/)                   | 6.0+         |
+| 桌面端框架 | [Tauri](https://tauri.app/)                   | V2           |
+| 后端语言   | [Rust](https://www.rust-lang.org/)            | 2021 Edition |
+| 包管理     | pnpm / npm                                    | —            |
 
 ---
 
@@ -114,22 +121,21 @@ pnpm tauri build
 
 ## 📖 学习路线
 
-| 阶段 | 内容 | 文件 |
-|------|------|------|
-| **第一阶段：入门核心** | 项目结构、前后端通信、命令系统、权限模型 | `src/learn/01-04.ts` + `src-tauri/src/learn/_01-03.rs` |
-| **第二阶段：桌面特性** | 窗口管理、菜单托盘、文件系统、对话框通知 | `src/learn/05-08.ts` + `src-tauri/src/learn/_04-05.rs` |
+| 阶段                   | 内容                                                | 文件                                                   |
+| ---------------------- | --------------------------------------------------- | ------------------------------------------------------ |
+| **第一阶段：入门核心** | 项目结构、前后端通信、命令系统、权限模型            | `src/learn/01-04.ts` + `src-tauri/src/learn/_01-03.rs` |
+| **第二阶段：桌面特性** | 窗口管理、菜单托盘、文件系统、对话框通知            | `src/learn/05-08.ts` + `src-tauri/src/learn/_04-05.rs` |
 | **第三阶段：进阶实战** | 剪贴板 HTTP、进程管理、安全权限、插件开发、打包发布 | `src/learn/09-12.ts` + `src-tauri/src/learn/_06-08.rs` |
 
 完整的学习顺序和说明请查看 [**LEARN_GUIDE.md**](./LEARN_GUIDE.md)。
 
-### ⚡ V1 → V2 核心变化
+### 🔒 Tauri V2 权限系统
 
-Tauri V2 相比 V1 最大的变化是**权限系统重构**：
+Tauri V2 采用**声明式权限模型**：
 
-- ❌ V1：`tauri.conf.json` 中集中配置 `allowlist`
-- ✅ V2：`capabilities/*.json` 分文件声明权限，粒度更细，可按窗口绑定
-
-详细对照表请参阅 [**LEARN_GUIDE.md**](./LEARN_GUIDE.md) 中的 `Tauri V1 vs V2 核心差异对照表`。
+- `capabilities/*.json` 分文件声明权限，粒度更细，可按窗口绑定
+- 默认拒绝所有权限，必须显式声明
+- 每个 IPC 调用、文件路径、系统 API 都需要在 capabilities 中授权
 
 ---
 
@@ -144,13 +150,13 @@ Tauri V2 相比 V1 最大的变化是**权限系统重构**：
 
 ## 📚 相关资源
 
-| 资源 | 链接 |
-|------|------|
-| Tauri V2 官方文档 | https://v2.tauri.app/ |
-| Vue 3 文档 | https://vuejs.org/ |
-| Rust 官方教程 | https://doc.rust-lang.org/book/ |
-| 本仓库学习指南 | [LEARN_GUIDE.md](./LEARN_GUIDE.md) |
-| V2 权限速查表 | [CAPABILITIES_CHEATSHEET.md](./CAPABILITIES_CHEATSHEET.md) |
+| 资源              | 链接                                                       |
+| ----------------- | ---------------------------------------------------------- |
+| Tauri V2 官方文档 | https://v2.tauri.app/                                      |
+| Vue 3 文档        | https://vuejs.org/                                         |
+| Rust 官方教程     | https://doc.rust-lang.org/book/                            |
+| 本仓库学习指南    | [LEARN_GUIDE.md](./LEARN_GUIDE.md)                         |
+| V2 权限速查表     | [CAPABILITIES_CHEATSHEET.md](./CAPABILITIES_CHEATSHEET.md) |
 
 ---
 

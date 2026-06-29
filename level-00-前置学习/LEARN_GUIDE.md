@@ -50,23 +50,21 @@
 
 ---
 
-## 🔄 Tauri V1 vs V2 核心差异对照表
+## 🔑 Tauri V2 核心概念速查
 
-| 功能领域 | V1 (已废弃) | V2 (当前) |
-|----------|-------------|----------|
-| **权限系统** | `tauri.conf.json` 中 `allowlist` | `capabilities/*.json` 分文件声明 |
-| **权限格式** | `{ "fs": { "readFile": true } }` | `"fs:read-files"` (插件:操作) |
-| **权限粒度** | 全局 | 可按窗口绑定 (`"windows": ["main"]`) |
-| **Scope 配置** | allowlist 内的 scope 字段 | 独立的 `"fs:scope"` 权限标识符 |
-| **插件注册** | `tauri.conf.json` 的 `plugins` 字段 | `lib.rs` 中 `.plugin(xxx::init())` |
-| **插件依赖** | feature flag 模式 | 独立的 npm 包 + cargo crate |
-| **配置文件** | `$schema` 指向 `./node_modules/.../schema.json` | `$schema` 指向 `https://schema.tauri.app/config/2` |
-| **事件 API** | `app.emit_all()` / `window.emit()` | `Emitter` trait: `app.emit()` / `window.emit()` |
-| **Channel** | ❌ 不支持 | ✅ `tauri::ipc::Channel` 流式传输 |
-| **菜单构建** | 前端 + Rust 混合 | 主要在 Rust 端 (`menu` 模块) |
-| **窗口创建** | `WindowBuilder` | `WebviewWindowBuilder` |
-| **状态管理** | 相同 (manage + State) | 相同，无变化 |
-| **命令定义** | `#[tauri::command]` | 相同，无变化 |
+| 概念 | 说明 |
+|------|------|
+| **权限系统** | `capabilities/*.json` 分文件声明，可按窗口绑定 |
+| **权限格式** | `"plugin:operation"` 如 `"fs:read-files"` |
+| **Scope 配置** | 独立的 scope 权限标识符，限制文件/URL 访问范围 |
+| **插件注册** | `lib.rs` 中 `.plugin(xxx::init())` |
+| **插件依赖** | 独立的 npm 包 + cargo crate |
+| **事件 API** | `Emitter` trait: `app.emit()` / `window.emit()` |
+| **Channel** | `tauri::ipc::Channel` 流式传输 |
+| **菜单构建** | Rust 端 `menu` 模块 |
+| **窗口创建** | `WebviewWindowBuilder` |
+| **状态管理** | `manage()` + `tauri::State<T>` |
+| **命令定义** | `#[tauri::command]` |
 
 ---
 
@@ -74,15 +72,11 @@
 
 ### 开发模式
 ```bash
-# 1. 安装依赖
-npm install
-# 或
+# 安装依赖
 pnpm install
 
-# 2. 启动 Tauri 开发服务器（前端热更新 + Rust 热重载）
-npm run tauri dev
-# 或
-pnpm tauri dev
+# 启动 Tauri 开发服务器（前端热更新 + Rust 热重载）
+cargo tauri dev
 ```
 
 ### Rust 代码检查
@@ -175,8 +169,7 @@ pnpm tauri build
 2. **1-4 章是基础中的基础**：不要跳过，V2 的权限模型完全不同
 3. **写代码比看代码重要**：每学完一章，尝试在当前项目中实践
 4. **第 20 章的待办事项应用**：建议学完后独立实现一遍
-5. **遇到问题先检查 capabilities**：V2 90% 的功能问题都是权限配置遗漏
-6. **关注 V1→V2 差异**：如果之前用过 V1，务必注意权限系统的完全重构
+5. **遇到问题先检查 capabilities**：90% 的功能问题都是权限配置遗漏
 
 ---
 

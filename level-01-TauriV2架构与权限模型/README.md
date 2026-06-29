@@ -30,17 +30,17 @@
 - 前端通过 IPC（`invoke`）调用 Rust Command，**不能直接访问系统 API**
 - WebView 使用操作系统原生 WebView：MacOS 用 WKWebView，Windows 用 WebView2，Linux 用 WebKitGTK
 
-### Tauri v2 与 v1 的根本差异
+### Tauri v2 核心特性
 
-| 特性 | v1 | v2 |
-|------|----|----|
-| 权限模型 | `allowlist`（单一 JSON 字段） | `capabilities/` 目录（多文件、可组合） |
-| 窗口管理 | `Window` 一体 | `WebviewWindow` + `Webview` 分离 |
-| 移动端 | 不支持 | 支持 iOS/Android |
-| 多 WebView | 有限支持 | 原生支持 |
-| 插件系统 | 初步 | 成熟的插件 Builder API |
+| 特性 | 说明 |
+|------|------|
+| 权限模型 | `capabilities/` 目录，多文件、可组合的声明式权限 |
+| 窗口管理 | `WebviewWindow` + `Webview` 分离架构 |
+| 移动端 | 支持 iOS/Android |
+| 多 WebView | 原生支持单窗口多 WebView |
+| 插件系统 | 成熟的插件 Builder API |
 
-### Capabilities 权限系统（v2 核心革新）
+### Capabilities 权限系统
 
 ```
 【对比 Electron】
