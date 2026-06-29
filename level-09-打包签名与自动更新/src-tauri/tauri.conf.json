@@ -1,0 +1,20 @@
+{
+  "productName": "Level 09 - 打包签名与自动更新",
+  "version": "0.1.0",
+  "identifier": "com.learn.dev.tauri.level09",
+  "build": { "frontendDist": "../dist", "devUrl": "http://localhost:1420", "beforeDevCommand": "pnpm dev", "beforeBuildCommand": "pnpm build" },
+  "app": {
+    "windows": [{ "label": "main", "title": "Level 09 - 打包签名与自动更新", "width": 900, "height": 650, "resizable": true }],
+    "security": { "csp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self' ipc: http://ipc.localhost" }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": ["icons/32x32.png", "icons/128x128.png", "icons/icon.icns", "icons/icon.ico"],
+    "macOS": { "minimumSystemVersion": "11.0" },
+    "windows": { "webviewInstallMode": { "type": "fixedInstallerRuntimes" } }
+  },
+  "plugins": {
+    "updater": { "endpoints": ["https://releases.example.com/updater/{{target}}/{{current_version}}"], "pubkey": "PLACEHOLDER_PUBLIC_KEY" }
+  }
+}

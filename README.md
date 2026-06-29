@@ -17,7 +17,7 @@
 | 运维 | Docker（多阶段构建/Compose/生产安全） |
 | 桌面端 | 了解 Electron，探索 Tauri/Swift/egui 方案 |
 
-**极度反感"从什么是 npm install 开始讲"的小白式教学。**
+**极度反感"从什么是 pnpm install 开始讲"的小白式教学。**
 
 ## 路线图
 
@@ -81,7 +81,7 @@ xcode-select --install  # 如果未安装
 cd level-01-TauriV2架构与权限模型
 
 # 安装前端依赖
-npm install
+pnpm install
 
 # 启动开发模式（热更新）
 cargo tauri dev

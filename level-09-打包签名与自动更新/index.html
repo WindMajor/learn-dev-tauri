@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Level 01 - Tauri v2 架构与权限模型</title>
+    <!-- WHAT：Tauri v2 的前端入口 HTML
+         WHY：Tauri 使用文件协议加载此 HTML，CSP 策略在此处通过 meta 标签或 HTTP 头声明
+         WARNING：Tauri v2 的 CSP 主要在 tauri.conf.json 的 app.security.csp 中配置，
+                 此处的 meta 标签是辅助（Web 模式下生效，Tauri 模式以 conf.json 为准）
+         CONTRAST：Electron 可以加载任意 URL（远程/本地），Tauri 默认只能加载本地文件
+    -->
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

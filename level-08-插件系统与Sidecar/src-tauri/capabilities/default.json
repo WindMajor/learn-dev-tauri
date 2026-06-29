@@ -1,0 +1,8 @@
+{
+  "identifier": "default",
+  "description": "Level 01 默认权限集 —— 最小权限原则：每项能力必须显式声明",
+  "windows": ["main"],
+  "permissions": [
+    "core:default"
+  ]
+}

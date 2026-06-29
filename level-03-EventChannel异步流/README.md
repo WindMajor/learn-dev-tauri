@@ -56,7 +56,7 @@ import { Channel } from '@tauri-apps/api/core';
 
 ```bash
 cd level-03-EventChannel异步流
-npm install
+pnpm install
 cargo tauri dev
 ```
 

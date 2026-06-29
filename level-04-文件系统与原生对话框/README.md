@@ -27,7 +27,7 @@ Tauri v2：通过 Scope 约束，可在声明范围内自由读写。
 
 ```bash
 cd level-04-文件系统与原生对话框
-npm install
+pnpm install
 cargo tauri dev
 ```
 

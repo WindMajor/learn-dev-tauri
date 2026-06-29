@@ -35,7 +35,7 @@ Rust 后端（Command + State + Event + 插件）+ Vue3 前端 + Capabilities + 
 
 ```bash
 cd level-10-毕业设计-企业数据汇总办公桌面端
-npm install
+pnpm install
 cargo tauri dev
 ```
 

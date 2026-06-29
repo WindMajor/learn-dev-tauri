@@ -33,6 +33,7 @@ yarn-error.log*
 *.pem
 *.key
 
-# ─── 包管理器锁文件（可选，按需保留） ───
-# pnpm-lock.yaml
-# yarn.lock
+# ─── 包管理器 ───
+package-lock.json
+yarn.lock
+# pnpm-lock.yaml 应提交（确保可复现安装）

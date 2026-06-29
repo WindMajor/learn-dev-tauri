@@ -1,0 +1,10 @@
+{
+  "productName": "Level 06 - 菜单托盘与系统集成",
+  "version": "0.1.0",
+  "identifier": "com.learn.dev.tauri.level06",
+  "build": { "frontendDist": "../dist", "devUrl": "http://localhost:1420", "beforeDevCommand": "pnpm dev", "beforeBuildCommand": "pnpm build" },
+  "app": {
+    "windows": [{ "label": "main", "title": "Level 06 - 菜单托盘与系统集成", "width": 900, "height": 650, "resizable": true }],
+    "security": { "csp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self' ipc: http://ipc.localhost" }
+  }
+}

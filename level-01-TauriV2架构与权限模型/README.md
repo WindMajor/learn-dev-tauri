@@ -121,7 +121,7 @@ default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'
 cd level-01-TauriV2架构与权限模型
 
 # 安装前端依赖
-npm install
+pnpm install
 
 # 启动 Tauri 开发模式
 cargo tauri dev

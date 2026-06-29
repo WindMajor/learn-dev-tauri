@@ -69,7 +69,7 @@ Electron 无内置 State 管理：
 
 ```bash
 cd level-02-IPC通信Command与State
-npm install
+pnpm install
 cargo tauri dev
 ```
 
