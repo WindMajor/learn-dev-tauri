@@ -1,0 +1,8 @@
+{
+  "type": "Scope 路径越界导致文件访问被拒绝",
+  "error": "前端尝试读取 /etc/passwd，被 Scope 拦截：'path not allowed: /etc/passwd'",
+  "why": "Tauri v2 的 fs 插件通过 Scope 限制文件访问范围。未在 scope.allow 中声明的路径默认无权访问。【对比 Electron】Electron 的 fs 无此限制。",
+  "fix": "在 tauri.conf.json 的 plugins.fs.scope.allow 中添加需要的路径，或在 capabilities 中声明更宽泛的权限。【WARNING】不要在生产环境使用 $HOME/** 这种宽泛 Scope！",
+  "wrong_config": { "plugins": { "fs": { "scope": { "allow": ["$TEMP/**"], "deny": [] } } } },
+  "fixed_config": { "plugins": { "fs": { "scope": { "allow": ["$HOME/Documents/**", "$TEMP/**"], "deny": ["**/.env"] } } } }
+}

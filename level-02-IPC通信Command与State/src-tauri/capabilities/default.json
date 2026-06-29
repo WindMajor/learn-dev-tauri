@@ -1,0 +1,8 @@
+{
+  "identifier": "default",
+  "description": "Level 02 默认权限集",
+  "windows": ["main"],
+  "permissions": [
+    "core:default"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "// BUG 类型": "Capabilities 未声明导致 IPC 调用被拒绝",
+  "// 这是什么错误": "前端 invoke('greet') 时 Tauri Core 拒绝 IPC 调用，返回 'not allowed by the scope' 错误",
+  "// 编译/运行后的错误": "前端控制台显示：Unhandled Promise Rejection: command greet not allowed by the scope",
+  "// Rust 后端日志": "[Tauri] IPC command 'greet' rejected: not allowed by scope 'default'",
+  "// 为什么会这样": "Tauri v2 的 Capabilities 权限系统要求每个 IPC 能力显式声明。此配置中 'core:default' 被移除后，Core 拒绝所有未授权的 IPC 调用。这是 Tauri v2 的 '默认拒绝' 安全哲学。",
+  "// 在 Electron/Swift/egui 中对应的行为": {
+    "Electron": "Electron 无此机制 —— ipcMain.handle() 一旦注册就全局可用，没有任何权限检查。这就是为什么 Electron 应用更容易出现 IPC 安全漏洞。",
+    "Swift": "Swift 的 App Sandbox 通过 entitlements.plist 控制系统级权限（文件/网络），但不控制应用内部通信。",
+    "egui": "纯 Rust GUI 无 IPC 概念，所有代码在同一进程，无权限边界。"
+  },
+  "// 如何修复": "在 capabilities/default.json 中添加 'core:default' 权限，或为 greet 命令显式添加自定义权限标识符。",
+
+  "identifier": "default",
+  "description": "【错误配置】缺少 core:default 权限 —— 所有 IPC 调用都会被拒绝",
+  "windows": ["main"],
+  "permissions": []
+}

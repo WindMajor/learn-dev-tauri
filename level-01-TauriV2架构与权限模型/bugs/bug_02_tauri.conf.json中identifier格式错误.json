@@ -1,0 +1,41 @@
+{
+  "// BUG 类型": "tauri.conf.json 中 identifier 格式不符合反向域名规范",
+  "// 这是什么错误": "identifier 字段值 'my-cool-app' 不符合反向域名规范，导致构建（cargo tauri build）时报错，MacOS 代码签名失败",
+  "// 编译/运行后的错误": {
+    "cargo tauri build 输出": "Error: invalid identifier 'my-cool-app'. Must be in reverse-domain format (e.g. 'com.example.app').",
+    "为什么必须反向域名": "MacOS 的 Bundle Identifier 和 Windows 的 Package Identity 都要求反向域名格式。这是操作系统的强制要求，不是 Tauri 的规定。",
+    "更严重的后果": "如果不对 identifier 进行签名验证，MacOS 的 Gatekeeper 会阻止应用运行，Windows 的 SmartScreen 会发出未知发布者警告。"
+  },
+  "// 为什么会这样": "MacOS/iOS 的 Bundle ID 传统格式是 com.company.appname，用于代码签名、沙盒标识、App Store 唯一性。Tauri v2 强制遵循此规范以确保跨平台打包正确。",
+  "// 在 Electron/Swift 中对应的行为": {
+    "Electron": "electron-builder 的 appId 字段同样要求反向域名格式，但 dev 模式不检查，只在打包时报错。",
+    "Swift": "Xcode 项目的 Bundle Identifier 强制要求反向域名格式，开发阶段就检查。",
+    "对比": "Tauri v2 在 cargo tauri build 时检查，比 Electron 更早暴露此问题。"
+  },
+  "// 如何修复": "将 identifier 改为 'com.learn.dev.tauri.level01'（反向域名格式）。",
+
+  "// 以下是错误配置的完整 tauri.conf.json",
+  "productName": "Level 01 Bug Demo",
+  "version": "0.1.0",
+  "identifier": "my-cool-app",
+
+  "build": {
+    "frontendDist": "../dist",
+    "devUrl": "http://localhost:1420",
+    "beforeDevCommand": "npm run dev",
+    "beforeBuildCommand": "npm run build"
+  },
+
+  "app": {
+    "windows": [
+      {
+        "title": "Bug Demo",
+        "width": 800,
+        "height": 600
+      }
+    ],
+    "security": {
+      "csp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'"
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "identifier": "window-management",
+  "description": "窗口管理权限 —— 创建子窗口、设置标题",
+  "windows": ["main"],
+  "permissions": [
+    "core:window:allow-create",
+    "core:window:allow-set-title",
+    "core:window:allow-set-size",
+    "core:window:allow-set-fullscreen",
+    "core:window:allow-center",
+    "core:window:allow-close"
+  ]
+}

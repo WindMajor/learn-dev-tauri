@@ -1,0 +1,38 @@
+# ─── 操作系统生成文件 ───
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# ─── IDE / 编辑器 ───
+.vscode/
+.idea/
+*.iml
+.history/
+
+# ─── Node.js / 前端 ───
+node_modules/
+dist/
+*.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ─── Rust / Cargo ───
+**/src-tauri/target/
+**/target/
+
+# ─── Tauri 构建产物 ───
+**/src-tauri/icons/
+**/src-tauri/gen/
+
+# ─── 环境变量 / 密钥 ───
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# ─── 包管理器锁文件（可选，按需保留） ───
+# pnpm-lock.yaml
+# yarn.lock

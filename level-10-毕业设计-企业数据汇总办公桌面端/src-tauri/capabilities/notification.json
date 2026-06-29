@@ -1,0 +1,10 @@
+{
+  "identifier": "notification",
+  "description": "系统通知权限",
+  "windows": ["main"],
+  "permissions": [
+    "notification:default",
+    "notification:allow-notify",
+    "notification:allow-is-permission-granted"
+  ]
+}

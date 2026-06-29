@@ -1,0 +1,14 @@
+{
+  "productName": "Level 04 - 文件系统与原生对话框",
+  "version": "0.1.0",
+  "identifier": "com.learn.dev.tauri.level04",
+  "build": { "frontendDist": "../dist", "devUrl": "http://localhost:1420", "beforeDevCommand": "npm run dev", "beforeBuildCommand": "npm run build" },
+  "app": {
+    "windows": [{ "title": "Level 04 - 文件系统与原生对话框", "width": 960, "height": 720, "resizable": true }],
+    "security": { "csp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self' ipc: http://ipc.localhost" }
+  },
+  "plugins": {
+    "dialog": {},
+    "fs": { "scope": { "allow": ["$HOME/**", "$APPDATA/**", "$TEMP/**", "**/Documents/**"], "deny": ["**/.env", "**/.ssh/**"] } }
+  }
+}

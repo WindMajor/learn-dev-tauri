@@ -1,0 +1,11 @@
+{
+  "$schema": "https://raw.githubusercontent.com/tauri-apps/tauri/dev/crates/tauri-cli/schema.json",
+  "productName": "Level 03 - Event Channel 异步流",
+  "version": "0.1.0",
+  "identifier": "com.learn.dev.tauri.level03",
+  "build": { "frontendDist": "../dist", "devUrl": "http://localhost:1420", "beforeDevCommand": "npm run dev", "beforeBuildCommand": "npm run build" },
+  "app": {
+    "windows": [{ "title": "Level 03 - Event Channel 异步流", "width": 950, "height": 700, "resizable": true }],
+    "security": { "csp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self' ipc: http://ipc.localhost" }
+  }
+}

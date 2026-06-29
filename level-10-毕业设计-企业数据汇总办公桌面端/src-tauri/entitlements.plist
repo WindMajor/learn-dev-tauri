@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  WHAT：MacOS 沙盒权限配置文件
+  WHY：MacOS 代码签名和公证需要此文件声明应用需要的系统权限
+  CONTRAST：
+    Electron：electron-builder 自动生成 entitlements
+    Swift：   Xcode 项目 → Signing & Capabilities 面板
+    Tauri：   tauri.conf.json 的 bundle.macOS.entitlements 指向此文件
+-->
+<plist version="1.0">
+<dict>
+    <!-- 允许网络访问（API 调用） -->
+    <key>com.apple.security.network.client</key>
+    <true/>
+    <!-- 允许文件访问（用户选择的文件） -->
+    <key>com.apple.security.files.user-selected.read-write</key>
+    <true/>
+    <!-- 允许 Downloads 目录访问 -->
+    <key>com.apple.security.files.downloads.read-write</key>
+    <true/>
+</dict>
+</plist>
